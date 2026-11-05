@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>ChadBot</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="ChadBot sets up safe, simple automation for small local businesses. Nothing gets sent or paid without your OK.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one calm column with an "approval slip" hero card; the safety section is the one bold band. */
+:root {
+  --bg: #f4f6f3;
+  --surface: #ffffff;
+  --ink: #17221e;
+  --muted: #55625c;
+  --line: #d9dfda;
+  --accent: #1d6b58;
+  --accent-ink: #ffffff;
+  --signal: #e7b72f;
+  --signal-soft: #fbf1d3;
+  --band: #17221e;
+  --band-ink: #eef2ee;
+  --band-muted: #a9b8b0;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111916; --surface: #18221e; --ink: #e8eee9; --muted: #9fb0a7; --line: #2b3832;
+    --accent: #4fb596; --accent-ink: #0d1613; --signal: #f0c650; --signal-soft: #2e2a17;
+    --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111916; --surface: #18221e; --ink: #e8eee9; --muted: #9fb0a7; --line: #2b3832;
+  --accent: #4fb596; --accent-ink: #0d1613; --signal: #f0c650; --signal-soft: #2e2a17;
+  --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 18px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: 72px; }
+.eyebrow { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.section-head { display: grid; gap: 12px; max-width: 640px; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(30px, 4vw, 42px); font-weight: 800; }
+.section-head p { color: var(--muted); }
+
+/* Header */
+.top { padding-block: 20px; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
+.brand-mark svg { width: 16px; height: 16px; }
+.nav { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 16px; }
+.nav a { color: var(--muted); text-decoration: none; }
+.nav a:hover { color: var(--ink); }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-weight: 600; font-size: 17px; padding: 12px 20px; border-radius: 10px; text-decoration: none; border: 2px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { color: var(--ink); border-color: var(--line); background: transparent; }
+.btn-ghost:hover { border-color: var(--ink); }
+.nav .btn { padding: 8px 16px; font-size: 15px; color: var(--accent-ink); }
+
+/* Hero */
+.hero { padding-block: 40px 80px; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr 1fr; gap: 56px; align-items: center; }
+.hero-copy { display: grid; gap: 22px; min-width: 0; }
+.hero h1 { font-size: clamp(42px, 6.4vw, 76px); font-weight: 800; letter-spacing: -0.02em; }
+.hero h1 .ok { background: linear-gradient(transparent 62%, var(--signal) 62%, var(--signal) 90%, transparent 90%); padding: 0 4px; }
+.hero .sub { font-family: var(--font-display); font-weight: 600; font-size: clamp(21px, 2.4vw, 26px); color: var(--accent); }
+.hero .lede { color: var(--muted); max-width: 34em; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Approval slip */
+.slip { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: 0 18px 40px -24px rgba(10, 30, 22, 0.45); display: grid; gap: 18px; min-width: 0; }
+.slip-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.slip-tag { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; background: var(--signal-soft); color: var(--ink); padding: 4px 10px; border-radius: 999px; }
+.slip-note { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.slip-title { font-family: var(--font-display); font-weight: 600; font-size: 22px; line-height: 1.2; padding-bottom: 14px; border-bottom: 1px dashed var(--line); }
+.slip-ask { display: grid; gap: 6px; }
+.slip-actions .btn:disabled { opacity: 0.5; cursor: default; }
+.slip-ask .who { font-size: 15px; color: var(--muted); }
+.slip-ask .what { font-size: 19px; font-weight: 600; line-height: 1.4; }
+.slip-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.slip-actions .btn { font-size: 16px; padding: 9px 18px; }
+.slip-status { font-family: var(--font-mono); font-size: 13px; color: var(--accent); min-height: 1.4em; }
+.log { border-top: 1px dashed var(--line); padding-top: 14px; display: grid; gap: 8px; font-family: var(--font-mono); font-size: 13px; line-height: 1.5; margin: 0; padding-left: 0; list-style: none; }
+.log li { display: grid; grid-template-columns: 74px 1fr; gap: 10px; }
+.log time { color: var(--muted); font-variant-numeric: tabular-nums; }
+.log li.new { animation: pop 0.5s ease-out; }
+@keyframes pop { from { background: var(--signal-soft); } to { background: transparent; } }
+
+/* Plate cards */
+.plate { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.plate article { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; display: grid; gap: 10px; align-content: start; }
+.plate h3 { font-size: 23px; font-weight: 600; }
+.plate p { color: var(--muted); }
+.plate .before { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.plate .before b { color: var(--ink); font-weight: 500; }
+
+/* Safety band */
+.band { background: var(--band); color: var(--band-ink); }
+.band .eyebrow, .band .section-head p { color: var(--band-muted); }
+.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid rgba(255,255,255,0.14); }
+.rule { display: grid; grid-template-columns: 52px 1fr; gap: 18px; padding: 28px 24px 28px 0; border-bottom: 1px solid rgba(255,255,255,0.14); min-width: 0; }
+.rule:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.14); }
+.rule:nth-child(even) { padding-left: 28px; }
+.rule-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--signal); color: #17221e; display: grid; place-items: center; }
+.rule-icon svg { width: 22px; height: 22px; }
+.rule h3 { font-size: 23px; font-weight: 600; margin-bottom: 6px; }
+.rule p { color: var(--band-muted); }
+
+/* Steps */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.steps li { counter-increment: step; display: grid; gap: 8px; align-content: start; padding-top: 18px; border-top: 3px solid var(--accent); }
+.steps li::before { content: "Step " counter(step); font-family: var(--font-mono); font-size: 13px; color: var(--muted); letter-spacing: 0.04em; }
+.steps h3 { font-size: 21px; font-weight: 600; }
+.steps p { color: var(--muted); font-size: 17px; }
+.care { margin-top: 32px; color: var(--muted); max-width: 640px; }
+
+/* Examples */
+.examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.examples article { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
+.examples h3 { font-size: 21px; font-weight: 600; }
+.examples p { color: var(--muted); font-size: 17px; }
+.examples .lesson { font-size: 16px; color: var(--ink); border-top: 1px dashed var(--line); padding-top: 10px; }
+
+/* About */
+.about .wrap { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; }
+.portrait { width: 200px; max-width: 100%; aspect-ratio: 1; border-radius: 20px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; font-size: 64px; }
+.about-copy { display: grid; gap: 16px; max-width: 640px; min-width: 0; }
+.about-copy h2 { font-size: clamp(30px, 4vw, 42px); font-weight: 800; }
+
+/* Box teaser */
+.box { background: var(--signal-soft); border-radius: 18px; padding: 36px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+.box h2 { font-size: clamp(26px, 3.4vw, 34px); font-weight: 800; }
+.box p { color: var(--muted); max-width: 560px; margin-top: 8px; }
+
+/* Contact */
+.contact { text-align: left; }
+.contact-card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 40px; display: grid; gap: 18px; max-width: 720px; }
+.contact-card h2 { font-size: clamp(32px, 4.4vw, 46px); font-weight: 800; }
+.contact-card p { color: var(--muted); }
+.email-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.email { font-family: var(--font-mono); font-size: 18px; padding: 10px 14px; border-radius: 10px; background: var(--bg); border: 1px solid var(--line); user-select: all; overflow-wrap: anywhere; }
+.copy-status { font-family: var(--font-mono); font-size: 13px; color: var(--accent); min-height: 1.4em; }
+
+footer { padding-block: 36px; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .hero .wrap { grid-template-columns: 1fr; gap: 36px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .examples { grid-template-columns: 1fr; }
+  .about .wrap { grid-template-columns: 1fr; }
+  .portrait { width: 140px; font-size: 48px; }
+}
+@media (max-width: 640px) {
+  section { padding-block: 52px; }
+  .nav a:not(.btn) { display: none; }
+  .plate, .rules { grid-template-columns: 1fr; }
+  .rule, .rule:nth-child(even) { padding-left: 0; padding-right: 0; }
+  .rule:nth-child(odd) { border-right: 0; }
+  .steps { grid-template-columns: 1fr; }
+  .box { grid-template-columns: 1fr; padding: 26px; }
+  .contact-card { padding: 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .log li.new { animation: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="ChadBot home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      ChadBot
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#safety">Safety</a>
+      <a href="#how">How it works</a>
+      <a href="#examples">Examples</a>
+      <a href="#about">About</a>
+      <a class="btn btn-primary" href="#contact">Free call</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Automation and AI for small local businesses</p>
+        <h1>The safe kind of <span class="ok">automation.</span></h1>
+        <p class="sub">Smart help that never leaves the building.</p>
+        <p class="lede">I set up small automations that take the busywork off your plate. Reminders, follow-ups and paperwork get handled for you. Nothing gets sent or paid without your OK.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contact">Book a free 20-minute call</a>
+          <a class="btn btn-ghost" href="#safety">How the safety works</a>
+        </div>
+      </div>
+
+      <div class="slip" aria-label="Example of a ChadBot approval request">
+        <div class="slip-top">
+          <span class="slip-tag">Try the demo</span>
+          <span class="slip-note">Nothing real is sent</span>
+        </div>
+        <p class="slip-title">This is what an approval looks like</p>
+        <div class="slip-ask">
+          <span class="who">ChadBot is waiting for your OK to</span>
+          <span class="what">Email a payment reminder for invoice 1042 ($380, 15 days late)</span>
+        </div>
+        <div class="slip-actions">
+          <button class="btn btn-primary" id="slip-approve" type="button">Approve</button>
+          <button class="btn btn-ghost" id="slip-hold" type="button">Not yet</button>
+          <button class="btn btn-ghost" id="slip-reset" type="button" hidden>Reset demo</button>
+        </div>
+        <div class="slip-status" id="slip-status" aria-live="polite"></div>
+        <ul class="log" id="slip-log" aria-label="Activity log">
+          <li><time>8:02 AM</time><span>Read 14 new emails. 2 are from customers.</span></li>
+          <li><time>8:03 AM</time><span>Drafted 2 replies. Waiting for you.</span></li>
+          <li><time>8:15 AM</time><span>You approved 1 reply. Sent.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="plate">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What I can take off your plate</p>
+        <h2>The stuff that eats your week</h2>
+        <p>Most small businesses lose hours to the same few chores. These are the ones I see most.</p>
+      </div>
+      <div class="plate">
+        <article>
+          <h3>Missed emails and leads</h3>
+          <p>New emails get sorted for you. The ones that matter ping your phone, and ChadBot drafts a reply you can check and send.</p>
+          <p class="before"><b>Before</b> a new customer waits 2 days for an answer</p>
+        </article>
+        <article>
+          <h3>Appointment reminders</h3>
+          <p>Customers get a reminder the day before, so fewer people forget. You pick the wording once.</p>
+          <p class="before"><b>Before</b> calling down the list every afternoon</p>
+        </article>
+        <article>
+          <h3>Invoices and paperwork</h3>
+          <p>Info from forms, invoices and receipts gets typed into your spreadsheet or books for you. No more copy and paste.</p>
+          <p class="before"><b>Before</b> an evening a week of data entry</p>
+        </article>
+        <article>
+          <h3>Bills and due dates</h3>
+          <p>Due dates land on a shared phone calendar with a heads-up before each one, so nothing slips through.</p>
+          <p class="before"><b>Before</b> sticky notes and late fees</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="safety">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How the safety works</p>
+        <h2>You stay in charge. Always.</h2>
+        <p>A lot of owners are nervous about AI right now, and that makes sense. So every ChadBot setup follows the same four rules.</p>
+      </div>
+      <div class="rules">
+        <div class="rule">
+          <span class="rule-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+          <div><h3>You approve first</h3><p>Nothing gets sent, paid or deleted until you say yes. ChadBot gets it ready and waits for you.</p></div>
+        </div>
+        <div class="rule">
+          <span class="rule-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
+          <div><h3>Your data stays home</h3><p>It runs on a computer in your office. Your files and customer lists stay on your machines. If a step ever needs an outside service, I tell you exactly what goes out before we turn it on.</p></div>
+        </div>
+        <div class="rule">
+          <span class="rule-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></span>
+          <div><h3>Everything is logged</h3><p>You get a plain-English list of what it did and when. No guessing.</p></div>
+        </div>
+        <div class="rule">
+          <span class="rule-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"/><path d="M6.3 7.5a8 8 0 1 0 11.4 0"/></svg></span>
+          <div><h3>Easy off switch</h3><p>One click stops it. You never need me to turn it off.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>From first call to up and running</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Free 20-minute call</h3><p>Tell me what eats up your week. No pressure and no tech talk.</p></li>
+        <li><h3>A plan and a price</h3><p>I write up what I'd build and give you a fixed price before any work starts.</p></li>
+        <li><h3>Build and test</h3><p>I build it and we test it together on your real work.</p></li>
+        <li><h3>You sign off</h3><p>It only goes live once you're happy with it.</p></li>
+      </ol>
+      <p class="care">After that you can add a monthly care plan. I keep an eye on things, make small changes and fix anything that breaks.</p>
+    </div>
+  </section>
+
+  <section id="examples">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">From my own setup</p>
+        <h2>Things I've built and use every day</h2>
+        <p>I test everything on my own home and paperwork first. Here are a few.</p>
+      </div>
+      <div class="examples">
+        <article>
+          <h3>Phone pings for important email</h3>
+          <p>Checks my inbox 3 times a day and pings my phone only for the emails that matter. The rest can wait.</p>
+          <p class="lesson">Good for owners who miss customer emails in the noise</p>
+        </article>
+        <article>
+          <h3>Shared bills calendar</h3>
+          <p>Every bill due date shows up on a phone calendar my wife and I both see. It updates itself.</p>
+          <p class="lesson">Good for anyone juggling vendor and utility due dates</p>
+        </article>
+        <article>
+          <h3>A physical yes button</h3>
+          <p>My AI assistant can work the TV and lights, but only after I press Yes on a small handheld device.</p>
+          <p class="lesson">Proof the approve-first rule works in real life</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="portrait" aria-hidden="true">CM</div>
+      <div class="about-copy">
+        <p class="eyebrow">About</p>
+        <h2>Hi, I'm Chad</h2>
+        <p>I've been building automation for companies for over 10 years. These days a lot of that work is connecting AI to everyday business tasks in a way that's safe and easy to check.</p>
+        <p>I've led an automation team and built automations in healthcare, where privacy rules are strict. That's where I learned to put guardrails on everything.</p>
+        <p>Big companies have whole teams for this. Small businesses usually don't, and that's who I want to help. When you work with ChadBot, you work with me.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="box">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <p class="eyebrow">Coming soon</p>
+          <h2>ChadBot Box</h2>
+          <p>A small computer that sits in your office and runs your automations, set up and looked after by me. Want to hear when it's ready? Send me a note.</p>
+        </div>
+        <a class="btn btn-primary" href="#contact">Keep me posted</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="contact-card">
+        <p class="eyebrow">Free 20-minute call</p>
+        <h2>Let's talk about your week</h2>
+        <p>Email me and tell me what takes up too much of your time. I'll get back to you within 1 business day to set up a call.</p>
+        <div class="email-row">
+          <span class="email" id="email">hello@getchadbot.com</span>
+          <button class="btn btn-ghost" id="copy-email" type="button">Copy</button>
+          <a class="btn btn-primary" href="mailto:hello@getchadbot.com?subject=Free%20call">Email me</a>
+        </div>
+        <div class="copy-status" id="copy-status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 ChadBot &middot; getchadbot.com</span>
+    <span>Central Florida &middot; Working with local businesses</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var log = document.getElementById('slip-log');
+  var status = document.getElementById('slip-status');
+  var approve = document.getElementById('slip-approve');
+  var hold = document.getElementById('slip-hold');
+  function addLine(text) {
+    var li = document.createElement('li');
+    li.className = 'new';
+    var t = document.createElement('time');
+    t.textContent = '8:21 AM';
+    var s = document.createElement('span');
+    s.textContent = text;
+    li.appendChild(t); li.appendChild(s);
+    log.appendChild(li);
+  }
+  var reset = document.getElementById('slip-reset');
+  function done(msg, line) {
+    status.textContent = msg;
+    addLine(line);
+    approve.disabled = true; hold.disabled = true;
+    reset.hidden = false;
+    reset.focus();
+  }
+  approve.addEventListener('click', function () { done('Approved. In real life the reminder would be sent and logged.', 'You approved the reminder. Sent.'); });
+  hold.addEventListener('click', function () { done('Held. Nothing was sent.', 'You held the reminder. Nothing sent.'); });
+  reset.addEventListener('click', function () {
+    var added = log.querySelectorAll('li.new');
+    for (var i = 0; i < added.length; i++) { added[i].remove(); }
+    status.textContent = '';
+    approve.disabled = false; hold.disabled = false;
+    reset.hidden = true;
+    approve.focus();
+  });
+
+  var copyBtn = document.getElementById('copy-email');
+  var copyStatus = document.getElementById('copy-status');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('email').textContent;
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      copyStatus.textContent = 'Selected. Press Ctrl+C to copy.';
+    }
+    try {
+      navigator.clipboard.writeText(text).then(function () { copyStatus.textContent = 'Copied.'; }, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
