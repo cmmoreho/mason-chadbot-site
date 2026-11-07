@@ -9,12 +9,15 @@
 <meta name="description" content="ChadBot sets up safe, simple automation for small local businesses. Nothing gets sent or paid without your OK.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://getchadbot.com/">
-<meta property="og:title" content="ChadBot: the safe kind of automation">
+<meta property="og:title" content="ChadBot™: the safe kind of automation">
 <meta property="og:description" content="Safe, simple automation for small local businesses. Nothing gets sent or paid without your OK.">
 <meta property="og:image" content="https://getchadbot.com/mason-og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="mason-favicon.svg" type="image/svg+xml">
+<link rel="icon" href="mason-favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="mason-apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -41,14 +44,14 @@
   :root:not([data-theme="light"]) {
     --bg: #111916; --surface: #18221e; --ink: #e8eee9; --muted: #9fb0a7; --line: #2b3832;
     --accent: #4fb596; --accent-ink: #0d1613; --signal: #f0c650; --signal-soft: #2e2a17;
-    --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c;
+    --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c; --mark-bg: #e8eee9;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111916; --surface: #18221e; --ink: #e8eee9; --muted: #9fb0a7; --line: #2b3832;
   --accent: #4fb596; --accent-ink: #0d1613; --signal: #f0c650; --signal-soft: #2e2a17;
-  --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c;
+  --band: #0a100d; --band-ink: #e8eee9; --band-muted: #93a69c; --mark-bg: #e8eee9;
   color-scheme: dark;
 }
 
@@ -74,8 +77,9 @@ section { padding-block: 72px; }
 .top { padding-block: 20px; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .brand { font-family: var(--font-display); font-weight: 800; font-size: 24px; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.brand-mark { width: 28px; height: 28px; border-radius: 8px; background: var(--accent); display: grid; place-items: center; }
-.brand-mark svg { width: 16px; height: 16px; }
+.brand-mark { width: 40px; height: 44px; display: block; flex: none; padding: 2px 3px; border-radius: 10px; background: var(--mark-bg, transparent); box-sizing: border-box; }
+.tm { font-size: 0.45em; font-weight: 600; vertical-align: super; line-height: 0; margin-left: 1px; }
+.brand-mark svg { width: 100%; height: 100%; display: block; }
 .nav { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; font-size: 16px; }
 .nav a { color: var(--muted); text-decoration: none; }
 .nav a:hover { color: var(--ink); }
@@ -199,8 +203,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="ChadBot home">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-      ChadBot
+      <span class="brand-mark" aria-hidden="true"><svg role="img" aria-hidden="true" viewBox="24 40 152 180" xmlns="http://www.w3.org/2000/svg"><g stroke="#1d1d1d" stroke-linejoin="round" stroke-linecap="round"><circle cx="40" cy="100" r="12" fill="#ff6b4a" stroke-width="5"/><circle cx="160" cy="100" r="12" fill="#ff6b4a" stroke-width="5"/><rect x="51" y="44" width="10" height="20" fill="#ff6b4a" stroke-width="4"/><rect x="139" y="44" width="10" height="20" fill="#ff6b4a" stroke-width="4"/><rect x="46" y="62" width="108" height="78" rx="6" fill="#2bb3a3" stroke-width="6"/><rect x="58" y="76" width="36" height="26" fill="#ffffff" stroke-width="7"/><rect x="106" y="76" width="36" height="26" fill="#ffffff" stroke-width="7"/><line x1="94" y1="88" x2="106" y2="88" stroke-width="6"/><polygon points="46,108 36,124 46,130 34,148 48,154 40,170 54,174 50,188 66,190 70,204 84,200 100,216 116,200 130,204 134,190 150,188 146,174 160,170 152,154 166,148 154,130 164,124 154,108 130,116 115,110 100,116 85,110 70,116" fill="#d9dde1" stroke-width="5"/><rect x="80" y="122" width="40" height="15" rx="2" fill="#ffffff" stroke-width="3"/><line x1="90" y1="122" x2="90" y2="137" stroke-width="3"/><line x1="100" y1="122" x2="100" y2="137" stroke-width="3"/><line x1="110" y1="122" x2="110" y2="137" stroke-width="3"/></g></svg></span>
+      <span>ChadBot<sup class="tm">&trade;</sup></span>
     </a>
     <nav class="nav" aria-label="Main">
       <a href="#safety">Safety</a>
@@ -372,7 +376,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       <div class="box">
         <div>
           <p class="eyebrow">Coming soon</p>
-          <h2>ChadBot Box</h2>
+          <h2>ChadBot<sup class="tm">&trade;</sup> Box</h2>
           <p>A small computer that sits in your office and runs your automations, set up and looked after by me. Want to hear when it's ready? Send me a note.</p>
         </div>
         <a class="btn btn-primary" href="#contact">Keep me posted</a>
@@ -399,7 +403,7 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 
 <footer>
   <div class="wrap">
-    <span>&copy; 2026 ChadBot &middot; getchadbot.com</span>
+    <span>&copy; 2026 ChadBot&trade; &middot; getchadbot.com</span>
     <span>Central Florida &middot; Working with local businesses</span>
   </div>
 </footer>
