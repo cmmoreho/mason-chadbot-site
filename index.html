@@ -127,6 +127,21 @@ section { padding-block: 72px; }
 .plate p { color: var(--muted); }
 .plate .before { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
 .plate .before b { color: var(--ink); font-weight: 500; }
+.svc { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.svc-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px; border-bottom: 1px solid var(--line); background: var(--bg); }
+.svc-tabs button { font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--muted); background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 9px 14px; cursor: pointer; }
+.svc-tabs button:hover { color: var(--ink); border-color: var(--line); }
+.svc-tabs button[aria-selected="true"] { color: var(--accent-ink); background: var(--accent); }
+.svc-panel { padding: 30px; display: grid; gap: 14px; }
+.svc-panel h3 { font-size: 26px; font-weight: 700; }
+.svc-lead { font-size: 19px; max-width: 680px; }
+.svc-panel dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 6px 0 0; }
+.svc-panel dl div { border-top: 2px solid var(--signal); padding-top: 12px; }
+.svc-panel dt { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.svc-panel dd { margin: 0; color: var(--ink); }
+.svc-cta { margin: 24px 0 0; }
+@media (max-width: 860px) { .svc-panel dl { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .svc-panel { padding: 22px 18px; } .svc-tabs button { font-size: 15px; padding: 8px 12px; } }
 
 /* Safety band */
 .band { background: var(--band); color: var(--band-ink); }
@@ -149,6 +164,19 @@ section { padding-block: 72px; }
 .care { margin-top: 32px; color: var(--muted); max-width: 640px; }
 
 /* Examples */
+/* Proving Ground */
+.pg-steps { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; border-radius: 12px; overflow: hidden; }
+.pg-steps li { background: var(--band); color: var(--band-ink); padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.pg-steps b { font-family: var(--font-mono); font-weight: 500; font-size: 12px; color: var(--signal); }
+.pg-steps span { font-weight: 600; }
+.pg-steps small { color: var(--band-muted); font-size: 14px; line-height: 1.4; }
+.pg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.pg-grid article { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); min-width: 0; }
+.pg-grid h3 { font-size: 21px; font-weight: 600; }
+.pg-grid p { color: var(--muted); font-size: 17px; }
+.pg-pill { justify-self: start; font-family: var(--font-mono); font-size: 12px; padding: 3px 10px; border-radius: 999px; background: var(--signal-soft); color: var(--ink); }
+.pg-pill.ok { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.pg-proof { font-family: var(--font-mono); font-size: 13px !important; color: var(--accent) !important; border-top: 1px dashed var(--line); padding-top: 10px; }
 .examples { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .examples article { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); }
 .examples h3 { font-size: 21px; font-weight: 600; }
@@ -181,7 +209,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
 @media (max-width: 860px) {
   .hero .wrap { grid-template-columns: 1fr; gap: 36px; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .examples { grid-template-columns: 1fr; }
+  .examples, .pg-grid { grid-template-columns: 1fr; }
+  .pg-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .about .wrap { grid-template-columns: 1fr; }
   .portrait { width: 140px; font-size: 48px; }
 }
@@ -207,9 +236,10 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       <span>ChadBot<sup class="tm">&trade;</sup></span>
     </a>
     <nav class="nav" aria-label="Main">
+      <a href="#services">Services</a>
       <a href="#safety">Safety</a>
       <a href="#how">How it works</a>
-      <a href="#examples">Examples</a>
+      <a href="#proving-ground">Proving Ground</a>
       <a href="#about">About</a>
       <a class="btn btn-primary" href="#contact">Free call</a>
     </nav>
@@ -287,6 +317,76 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     </div>
   </section>
 
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Services</p>
+        <h2>What I can set up for you</h2>
+        <p>Pick one to see how it works, what it looks like day to day and where you stay in control.</p>
+      </div>
+      <div class="svc">
+        <div class="svc-tabs" role="tablist" aria-label="Services">
+          <button type="button" role="tab" id="svc-tab-docs" aria-controls="svc-docs" aria-selected="true">Document capture</button>
+          <button type="button" role="tab" id="svc-tab-rpa" aria-controls="svc-rpa" aria-selected="false" tabindex="-1">Repeat computer tasks (RPA)</button>
+          <button type="button" role="tab" id="svc-tab-email" aria-controls="svc-email" aria-selected="false" tabindex="-1">Email and leads</button>
+          <button type="button" role="tab" id="svc-tab-remind" aria-controls="svc-remind" aria-selected="false" tabindex="-1">Reminders and calendars</button>
+          <button type="button" role="tab" id="svc-tab-custom" aria-controls="svc-custom" aria-selected="false" tabindex="-1">Something else</button>
+        </div>
+
+        <div class="svc-panel" role="tabpanel" id="svc-docs" aria-labelledby="svc-tab-docs" tabindex="0">
+          <h3>Document capture</h3>
+          <p class="svc-lead">ChadBot reads your invoices, receipts and forms and types the details where they belong. Your spreadsheet or your books, whatever you use now.</p>
+          <dl>
+            <div><dt>For example</dt><dd>A shop gets 40 vendor invoices a week by email. ChadBot pulls the vendor, date, amount and due date from each one and adds a line to the books. Anything it isn't sure about gets flagged for you to look at</dd></div>
+            <div><dt>How we start</dt><dd>You send me 5 to 10 real examples with the private details blacked out. I show you what it pulls from each one before anything gets set up</dd></div>
+            <div><dt>You stay in charge</dt><dd>It only fills in the info. Nothing gets paid, and you can see every line it added</dd></div>
+          </dl>
+        </div>
+
+        <div class="svc-panel" role="tabpanel" id="svc-rpa" aria-labelledby="svc-tab-rpa" tabindex="0" hidden>
+          <h3>Repeat computer tasks (RPA)</h3>
+          <p class="svc-lead">If you or your staff click through the same screens every day, a bot can do those clicks for you. This is called RPA, short for robotic process automation. It works with the programs you already have, even the old ones.</p>
+          <dl>
+            <div><dt>For example</dt><dd>Every morning someone copies new orders from the website into the shipping program, one at a time. A bot does it before you get in and leaves a short note of what it moved</dd></div>
+            <div><dt>How we start</dt><dd>You show me the task once on a call. I write down every step, you check it, and then I build it</dd></div>
+            <div><dt>You stay in charge</dt><dd>It runs on test data first. Anything that sends money or messages waits for your OK</dd></div>
+          </dl>
+        </div>
+
+        <div class="svc-panel" role="tabpanel" id="svc-email" aria-labelledby="svc-tab-email" tabindex="0" hidden>
+          <h3>Email and leads</h3>
+          <p class="svc-lead">New email gets sorted for you. The ones that matter ping your phone, and ChadBot drafts a reply you can check and send.</p>
+          <dl>
+            <div><dt>For example</dt><dd>A new customer asks for a quote at 8pm. You get a ping, open the draft, fix a word and hit send. They hear back that night instead of 2 days later</dd></div>
+            <div><dt>How we start</dt><dd>You tell me what counts as important. It could be a customer name, a word like "quote" or a certain sender</dd></div>
+            <div><dt>You stay in charge</dt><dd>ChadBot never sends a reply on its own. Every one waits for you</dd></div>
+          </dl>
+        </div>
+
+        <div class="svc-panel" role="tabpanel" id="svc-remind" aria-labelledby="svc-tab-remind" tabindex="0" hidden>
+          <h3>Reminders and calendars</h3>
+          <p class="svc-lead">Customers get a reminder the day before their appointment. Bill due dates land on a shared phone calendar with a heads-up before each one.</p>
+          <dl>
+            <div><dt>For example</dt><dd>A salon texts every client the afternoon before. Fewer people forget, and nobody has to call down the list</dd></div>
+            <div><dt>How we start</dt><dd>You pick the wording once and the time you want them to go out</dd></div>
+            <div><dt>You stay in charge</dt><dd>You can see the list before it goes out and turn it off anytime</dd></div>
+          </dl>
+        </div>
+
+        <div class="svc-panel" role="tabpanel" id="svc-custom" aria-labelledby="svc-tab-custom" tabindex="0" hidden>
+          <h3>Something else</h3>
+          <p class="svc-lead">Got a chore that isn't on this list? Tell me about it. If a bot can do it I'll tell you how, and if it can't I'll tell you that too.</p>
+          <dl>
+            <div><dt>For example</dt><dd>In the Mason Proving Ground I built a physical Yes button. The AI assistant can control the TV and lights, but only after the button is pressed</dd></div>
+            <div><dt>How we start</dt><dd>Book the free 20-minute call and walk me through your week</dd></div>
+            <div><dt>You stay in charge</dt><dd>Same four rules as everything else. You approve first, your data stays home, everything is logged and there's an easy off switch</dd></div>
+          </dl>
+        </div>
+      </div>
+      <p class="svc-cta"><a class="btn btn-primary" href="#contact">Book a free 20-minute call</a></p>
+    </div>
+  </section>
+
   <section class="band" id="safety">
     <div class="wrap">
       <div class="section-head">
@@ -331,28 +431,55 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
     </div>
   </section>
 
-  <section id="examples">
+  <section id="proving-ground">
     <div class="wrap">
       <div class="section-head">
-        <p class="eyebrow">From my own setup</p>
-        <h2>Things I've built and use every day</h2>
-        <p>I test everything on my own home and paperwork first. Here are a few.</p>
+        <p class="eyebrow">The Mason Proving Ground</p>
+        <h2>Tested on live hardware before it reaches you</h2>
+        <p>Every service here is built and tested first in the Mason Proving Ground, a private test environment with its own bot server, cameras, sensors and smart devices. Nothing is offered to a customer until it passes.</p>
       </div>
-      <div class="examples">
+      <ol class="pg-steps" aria-label="How every build is proven">
+        <li><b>STEP 1</b><span>Design approved</span><small>Signed off before any code</small></li>
+        <li><b>STEP 2</b><span>Mock testing</span><small>Every path, simulated devices</small></li>
+        <li><b>STEP 3</b><span>Live test</span><small>On hardware, with a go-ahead</small></li>
+        <li><b>STEP 4</b><span>Signed off</span><small>Results logged, rollback ready</small></li>
+      </ol>
+      <div class="pg-grid">
         <article>
-          <h3>Phone pings for important email</h3>
-          <p>Checks my inbox 3 times a day and pings my phone only for the emails that matter. The rest can wait.</p>
-          <p class="lesson">Good for owners who miss customer emails in the noise</p>
+          <span class="pg-pill ok">Proven</span>
+          <h3>Approve from your phone</h3>
+          <p>Before a bot sends, submits or unlocks anything, your phone asks first. One tap approves it. No answer means nothing happens.</p>
+          <p class="pg-proof">34 of 34 test cases passed</p>
         </article>
         <article>
-          <h3>Shared bills calendar</h3>
-          <p>Every bill due date shows up on a phone calendar my wife and I both see. It updates itself.</p>
-          <p class="lesson">Good for anyone juggling vendor and utility due dates</p>
+          <span class="pg-pill ok">Proven</span>
+          <h3>Bots on an always-on server</h3>
+          <p>A small dedicated computer runs the bots day and night, and a task can be started from a phone.</p>
+          <p class="pg-proof">Recovers on its own after a restart</p>
         </article>
         <article>
-          <h3>A physical yes button</h3>
-          <p>My AI assistant can work the TV and lights, but only after I press Yes on a small handheld device.</p>
-          <p class="lesson">Proof the approve-first rule works in real life</p>
+          <span class="pg-pill ok">Proven</span>
+          <h3>Reads the text, keeps no pictures</h3>
+          <p>A camera reads a screen or document and only the text comes back. Each photo is deleted right after it's read.</p>
+          <p class="pg-proof">Works with no internet connection</p>
+        </article>
+        <article>
+          <span class="pg-pill">In testing</span>
+          <h3>One-tap routines</h3>
+          <p>"Lights out" or "Closing up" as one button, with a plain-English report of anything that needs attention.</p>
+          <p class="pg-proof">26 of 26 test cases passed</p>
+        </article>
+        <article>
+          <span class="pg-pill ok">Live</span>
+          <h3>Lead alerts to your phone</h3>
+          <p>Website messages reach the owner's phone in seconds, so after-hours leads get answered before they go cold.</p>
+          <p class="pg-proof">Running on this site</p>
+        </article>
+        <article>
+          <span class="pg-pill">In testing</span>
+          <h3>Motion sensing without cameras</h3>
+          <p>A small sensor notices movement from changes in Wi-Fi signals. No camera and no microphone.</p>
+          <p class="pg-proof">Calibrating now</p>
         </article>
       </div>
     </div>
@@ -376,8 +503,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
       <div class="box">
         <div>
           <p class="eyebrow">Coming soon</p>
-          <h2>ChadBot<sup class="tm">&trade;</sup> Box</h2>
-          <p>A small computer that sits in your office and runs your automations, set up and looked after by me. Want to hear when it's ready? Send me a note.</p>
+          <h2>ChadderBox<sup class="tm">&trade;</sup></h2>
+          <p>A small computer that sits in your office and runs your automations. I set it up and keep it updated, but it's yours. I can't see your files or get into it unless you let me in. Want to hear when it's ready? Send me a note.</p>
         </div>
         <a class="btn btn-primary" href="#contact">Keep me posted</a>
       </div>
@@ -408,6 +535,33 @@ footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wr
   </div>
 </footer>
 
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.svc-tabs [role="tab"]'));
+  function pick(t, focus) {
+    tabs.forEach(function (x) {
+      var on = x === t;
+      x.setAttribute('aria-selected', on ? 'true' : 'false');
+      x.tabIndex = on ? 0 : -1;
+      document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { pick(t); });
+    t.addEventListener('keydown', function (e) {
+      var j = null;
+      if (e.key === 'ArrowRight') j = i + 1;
+      else if (e.key === 'ArrowLeft') j = i - 1;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = tabs.length - 1;
+      if (j === null) return;
+      e.preventDefault();
+      pick(tabs[(j + tabs.length) % tabs.length], true);
+    });
+  });
+})();
+</script>
 <script>
 (function () {
   var log = document.getElementById('slip-log');
